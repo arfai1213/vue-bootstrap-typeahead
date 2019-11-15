@@ -30,7 +30,7 @@
     <vue-bootstrap-typeahead-list
       class="vbt-autcomplete-list"
       ref="list"
-      v-show="isFocused && data.length > 0"
+      :class="{'vbt-autcomplete-list--hidden': !(isFocused && data.length > 0)}"
       :query="inputValue"
       :data="formattedData"
       :background-variant="backgroundVariant"
@@ -192,5 +192,21 @@ export default {
     max-height: 350px;
     overflow-y: auto;
     z-index: 999;
+  }
+
+  /* Fake for IE. because it doesn't emit the hit event when using display:none */
+  .vbt-autcomplete-list--hidden {
+      animation-name: hide;
+      animation-fill-mode: both;
+      animation-duration: .3s;
+      animation-timing-function: linear;
+  }
+
+
+  @keyframes hide {
+      to {
+          visibility: hidden;
+          display: none;
+      }
   }
 </style>
